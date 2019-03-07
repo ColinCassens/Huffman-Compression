@@ -28,6 +28,8 @@ int main(int argc,char ** argv)
     tree(fptr, treeFile, codefile);
     fclose(treeFile);
 
+
+
     FILE * tree_top = fopen(argv[3],"r");
     FILE * compressed = fopen(argv[5],"wb");
     compression(fptr,tree_top,codefile,compressed,num_characters);
@@ -71,7 +73,7 @@ void compression(FILE * fptr, FILE * treefile, FILE * codefile,FILE * compressed
 
     //CANNOT GET THE HEADER TO PRINT IN THE CORRRECT FORMAT
     while((onebit = fgetc(treefile)) != EOF)
-    {   
+    {
         // mybyte = 0x0;
         // for(bit_count = 7; bit_count>=0; bit_count--)
         // {
@@ -107,7 +109,7 @@ void compression(FILE * fptr, FILE * treefile, FILE * codefile,FILE * compressed
             //             currentbyte |= mask << (8 - currentbit);
             //             currentbit++;
             //         }
-                    
+
             //     }
             // }
             // else
@@ -118,7 +120,7 @@ void compression(FILE * fptr, FILE * treefile, FILE * codefile,FILE * compressed
     }
 
     // Write the rest of the compressed file to the output
-    
+
 
 
 
@@ -247,7 +249,7 @@ void tree(FILE * fptr, FILE * tree_file, FILE * codefile)
         while(num_nodes != 2)
         {
             tempNode = CN(0,0);
-            newNode = head; 
+            newNode = head;
             while(newNode->next->next->next != NULL)
                 {
                     newNode = newNode->next;
@@ -299,7 +301,7 @@ void tree(FILE * fptr, FILE * tree_file, FILE * codefile)
                 {
                     newNode = newNode->next;
                 }
-                newNode->next = tempNode;        
+                newNode->next = tempNode;
             }
 
             num_nodes--;
@@ -321,7 +323,7 @@ void tree(FILE * fptr, FILE * tree_file, FILE * codefile)
                 tempNode->leftChild = head;
                 tempNode->rightChild->next = NULL;
                 tempNode->freq = tempNode->rightChild->freq + tempNode->leftChild->freq;
-                
+
             }
             else if(head->freq == head->next->freq)
             {
@@ -342,7 +344,7 @@ void tree(FILE * fptr, FILE * tree_file, FILE * codefile)
             }
             head = tempNode;
             head->loc = 9;
-            
+
         }
         long int byte = 0x0;
         WT(tree_file,codefile,head,byte,0);
@@ -381,7 +383,7 @@ void WT(FILE * treefile,FILE * codefile, treeNode * node,long int byte,int bitco
     if(node->rightChild != NULL)
     {
         tempbyte = (byte<<1) | mask;
-        node->rightChild->loc = node->loc * 10 + 1; 
+        node->rightChild->loc = node->loc * 10 + 1;
         WT(treefile,codefile,node->rightChild,tempbyte,bitcounter+1);
     }
     if(node->rightChild == NULL && node->leftChild == NULL)
