@@ -21,110 +21,26 @@ int main(int argc,char ** argv)
         return EXIT_FAILURE;
     }
     long num_characters = count(fptr, count_file);
-
+    printf("%ld\n",num_characters);
     //PRODUCE TREE FILE (PRE-ORDER)
-    FILE * treeFile = fopen(argv[3],"w");
+    FILE * treeFile = fopen(argv[3],"wb");
     FILE * codefile = fopen(argv[4],"w");
     tree(fptr, treeFile, codefile);
     fclose(treeFile);
 
+    //FILE * tree_top = fopen(argv[3],"r");
+    //FILE * compressed = fopen(argv[5],"wb");
+    //compression(fptr,tree_top,codefile,compressed,num_characters);
 
-
-    FILE * tree_top = fopen(argv[3],"r");
-    FILE * compressed = fopen(argv[5],"wb");
-    compression(fptr,tree_top,codefile,compressed,num_characters);
-
-    fclose(tree_top);
-    fclose(compressed);
-    fclose(codefile);
+    //fclose(tree_top);
+    //fclose(compressed);
+    //fclose(codefile);
     fclose(count_file);
     fclose(fptr);
 
     return EXIT_SUCCESS;
 }
 
-void compression(FILE * fptr, FILE * treefile, FILE * codefile,FILE * compressed,long UC)
-{
-    long z = 0;
-    fseek(treefile,0,SEEK_END);
-    int numbytes = ftell(treefile) / 2;
-    long x = numbytes - 1;
-    fseek(compressed,0,SEEK_SET);
-
-    //WRITE HEADER LONGS WORKING
-    fwrite(&z,sizeof(long),1,compressed);
-    fwrite(&x,sizeof(long),1,compressed);
-    fwrite(&UC,sizeof(long),1,compressed);
-
-    //Reset position of fptr to the beggining
-    fseek(fptr,0,SEEK_SET);
-    fseek(treefile,0,SEEK_SET);
-    char onebit;
-    // char c;
-    // int mybyte = 0x0;
-    // int character;
-    // int char_counter;
-    // int bit_count;
-    // int bit = 0x0;
-    // int mask = 0x1;
-    // int currentbit = 1;
-    // int currentbyte = 0x0;
-    // int bytecounter;
-
-    //CANNOT GET THE HEADER TO PRINT IN THE CORRRECT FORMAT
-    while((onebit = fgetc(treefile)) != EOF)
-    {
-        // mybyte = 0x0;
-        // for(bit_count = 7; bit_count>=0; bit_count--)
-        // {
-        //     bit = ((onebit >> bit_count) | 0x1);
-        //     mybyte = ((mybyte << 1) | bit);
-        // }
-        fwrite(&onebit,sizeof(char),1,compressed);
-            // if(bit == 1)
-            // {
-            //     mask = 0x1;
-            //     if(currentbit > 8)
-            //     {
-            //         fwrite(&currentbyte,sizeof(char),1,compressed);
-            //         currentbyte = 0x0;
-            //         currentbit = 1;
-            //     }
-            //     currentbyte |= mask << (8 - currentbit);
-            //     currentbit++;
-
-            //     c = fgetc(treefile);
-            //     character = c;
-            //     for(char_counter = 7; char_counter >= 0; char_counter--)
-            //     {
-            //         if(currentbit > 8)
-            //         {
-            //             fwrite(&currentbyte,sizeof(char),1,compressed);
-            //             currentbyte = 0x0;
-            //             currentbit = 1;
-            //         }
-            //         mask = (character >> char_counter) | 0x1;
-            //         if(currentbit <= 8)
-            //         {
-            //             currentbyte |= mask << (8 - currentbit);
-            //             currentbit++;
-            //         }
-
-            //     }
-            // }
-            // else
-            // {
-            //     currentbit++;
-            // }
-        // }
-    }
-
-    // Write the rest of the compressed file to the output
-
-
-
-
-}
 
 long count(FILE * fptr,FILE * count_file)
 {
@@ -157,6 +73,7 @@ long count(FILE * fptr,FILE * count_file)
     return num_char;
 }
 
+
 void tree(FILE * fptr, FILE * tree_file, FILE * codefile)
 {
     //GET THE ARR OF FREQUENCIES FOR THE INPUT FILE
@@ -176,181 +93,54 @@ void tree(FILE * fptr, FILE * tree_file, FILE * codefile)
         numchar++;
     }
 
-    //GET min index
-    int min = 1;
-    int min_index = 0;
-    int control = 1;
-    int y = 0;
-    if(numchar != 0)
+    treeNode * head = malloc(sizeof(treeNode));
+    treeNode * temp = malloc(sizeof(treeNode));
+    head->next = temp;
+    int x = 0;
+    int maxfreq = 0;
+    //Build linked list from array
+    for(x = 0; x < numchar; x++)
     {
-        while(control == 1)
-        {
-            y = 0;
-            while(control == 1 && y < 256)
-            {
-                if(counter_arr[y] == min)
-                {
-                    min = counter_arr[y];
-                    min_index = y;
-                    control = 0;
-                }
-                else
-                {
-                    y++;
-                }
-            }
-            if(control != 0)
-            {
-                min++;
-            }
+      int i = 0;
+      while((counter_arr[i] == 0) && (i < 256))
+      {
+        i++;
+      }
+      if(!((i == 256) && (counter_arr[i] <= 0)))
+      {
+        temp->ascii_value = i;
+        temp->char_val = i;
+        temp->freq = counter_arr[i];
+        if(temp->freq > maxfreq){
+          maxfreq = temp->freq;
         }
-
-        int max = 0;
-        for(int g = 0; g<256;g++)
-        {
-            if(counter_arr[g] > max)
-            {
-                max = counter_arr[g];
-            }
-        }
-
-        //treeNode * node;
-        treeNode * head = CN(0,0);
-        head->ascii_value = min_index;
-        head->char_val = min_index;
-        head->freq = min;
-        head->dist = 0;
-        head->next = NULL;
-
-        //CREATES LIST
-        int counter2 = 1;
-        int num_nodes = 1;
-        int k = 0;
-        while(max >= counter2)
-        {
-            for(k = 0; k < 256; k++)
-            {
-                if(counter_arr[k] == counter2 && k != min_index)
-                {
-                    treeNode * node = NULL;
-                    node = CN(k,counter2);
-                    node->next = head;
-                    head = node;
-                    num_nodes++;
-                }
-            }
-            counter2++;
-        }
-
-        //CREATE TREE
-        treeNode * newNode;
-        treeNode * tempNode;
-
-        while(num_nodes != 2)
-        {
-            tempNode = CN(0,0);
-            newNode = head;
-            while(newNode->next->next->next != NULL)
-                {
-                    newNode = newNode->next;
-                }
-            tempNode->rightChild = newNode->next;
-            tempNode->leftChild = newNode->next->next;
-            tempNode->freq = tempNode -> rightChild->freq + tempNode->leftChild->freq;
-            tempNode->ascii_value = tempNode -> rightChild->ascii_value + tempNode->leftChild->ascii_value;
-            newNode->next = NULL;
-            newNode = head;
-            if(tempNode->rightChild->next == tempNode->leftChild)
-            {
-                tempNode->rightChild->next = NULL;
-            }
-
-            //Positioning the temp node
-            while(newNode -> freq > tempNode->freq)
-            {
-                newNode = newNode->next;
-            }
-            if(newNode -> freq < tempNode->freq)
-            {
-                tempNode->next = newNode;
-                if(newNode == head)
-                {
-                    head = tempNode;
-                }
-            }
-            else if(newNode->freq == tempNode->freq)
-            {
-                if(newNode->ascii_value < tempNode->ascii_value)
-                {
-                    tempNode->next = newNode;
-                    if(newNode == head)
-                    {
-                        head = tempNode;
-                    }
-                }
-                if(newNode->ascii_value > tempNode->ascii_value)
-                {
-                    tempNode->next = newNode->next;
-                }
-            }
-
-            newNode = head;
-            if(head != tempNode)
-            {
-                while(newNode->next != tempNode->next)
-                {
-                    newNode = newNode->next;
-                }
-                newNode->next = tempNode;
-            }
-
-            num_nodes--;
-        }
-        //Finish off the last two nodes of the tree
-        if(num_nodes == 2)
-        {
-            tempNode = CN(0,0);
-            if(head->freq > head->next->freq)
-            {
-                tempNode->rightChild = head;
-                tempNode->leftChild = head->next;
-                tempNode->rightChild->next = NULL;
-                tempNode->freq = tempNode->rightChild->freq + tempNode->leftChild->freq;
-            }
-            else if(head->freq < head->next->freq)
-            {
-                tempNode->rightChild = head->next;
-                tempNode->leftChild = head;
-                tempNode->rightChild->next = NULL;
-                tempNode->freq = tempNode->rightChild->freq + tempNode->leftChild->freq;
-
-            }
-            else if(head->freq == head->next->freq)
-            {
-                if(head->ascii_value > head->next->ascii_value)
-                {
-                    tempNode->rightChild = head;
-                    tempNode->leftChild = head->next;
-                    tempNode->rightChild->next = NULL;
-                    tempNode->freq = tempNode->rightChild->freq + tempNode->leftChild->freq;
-                }
-                else
-                {
-                    tempNode->rightChild = head->next;
-                    tempNode->leftChild = head;
-                    tempNode->rightChild->next = NULL;
-                    tempNode->freq = tempNode->rightChild->freq + tempNode->leftChild->freq;
-                }
-            }
-            head = tempNode;
-            head->loc = 9;
-
-        }
-        long int byte = 0x0;
-        WT(tree_file,codefile,head,byte,0);
-
-        freebin(head);
+        counter_arr[i] = 0;
+        treeNode * temp2 = malloc(sizeof(treeNode));
+        temp->next = temp2;
+        temp = temp2;
+      }
+      else{
+        free(temp);
+      }
     }
+
+    temp = head;
+    while(temp->next->next != NULL)
+    {
+      temp = temp->next;
+    }
+    temp->next = NULL;
+
+    //Sort the code file based on count and ascii value
+    //Do this by getting the nodes with that frequency and putting them in the correct order. Then add them to the array. Stack may be useful for this.
+    Node * temp1 = head->next;
+    while(maxfreq != 0)
+    {
+
+    }
+
+    //Ceate the tree by taking the first two nodes and combining, then placing in the correct location
+
 }
 
 treeNode * CN(int val, int freq)
@@ -407,17 +197,18 @@ void WriteCode(FILE * codefile, char * char_val,long int byte,int bitcounter)
     }
     reverse = reverse / 10;
     master_list[ascii_value] = reverse;
-    int x = *char_val;
-    if(&x != NULL)
-    {
-        fprintf(codefile,"%s:",char_val);
-        while(reverse%10 != 9 && reverse > 0)
-        {
-            fprintf(codefile,"%ld",reverse%10);
-            reverse = reverse / 10;
-        }
-        fprintf(codefile,"\n");
-    }
+    //nt * x = malloc(sizeof(int));
+    // *x = *char_val;
+    // if(*x != NULL)
+    // {
+    //     fprintf(codefile,"%s:",char_val);
+    //     while(reverse%10 != 9 && reverse > 0)
+    //     {
+    //         fprintf(codefile,"%ld",reverse%10);
+    //         reverse = reverse / 10;
+    //     }
+    //     fprintf(codefile,"\n");
+    // }
 
 }
 

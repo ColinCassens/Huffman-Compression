@@ -1,0 +1,47 @@
+GCC = -gcc -std=c99 -g $(WARNING) $(ERROR)
+WARNING = -Wall -Wshadow --pedantic
+ERROR = -Wvla 
+VAL = valgrind --tool=memcheck --log-file=valgrind.log --leak-check=full --show-reachable=yes --verbose
+TESTFLAGS = -DTEST_MAIN
+SRCS = main.c #UPDATE WITH MORE FILES
+OBJS = $(SRCS:%.c=%.o)
+
+PA1: $(OBJS)
+	$(GCC) $(TESTFLAGS) $(OBJS) -o PA1
+
+.c.o:
+	$(GCC) $(TESTFLAGS) -c $*.c
+
+test1: PA1
+	./PA1 pa1_examples/original/gophers gophers.count gophers.tree gophers.code gophers.hbt 
+	diff gophers.count pa1_examples/count/gophers.count
+
+test2: PA1
+	./PA1 pa1_examples/original/woods woods.count woods.tree woods.code woods.hbt 
+	diff woods.count pa1_examples/count/woods.count
+
+test3: PA1
+	./PA1 pa1_examples/original/stone stone.count stone.tree stone.code stone.hbt 
+	diff stone.count pa1_examples/count/stone.count
+
+test4: PA1
+	./PA1 pa1_examples/original/lorum lorum.count lorum.tree lorum.code lorum.hbt 
+	diff lorum.count pa1_examples/count/lorum.count
+
+test5: PA1
+	./PA1 pa1_examples/original/binary1 binary1.count binary1.tree binary1.code binary1.hbt 
+	diff binary1.count pa1_examples/count/binary1.count
+
+test6: PA1
+	./PA1 pa1_examples/original/empty empty.count empty.tree empty.code empty.hbt 
+	diff empty.count pa1_examples/count/empty.count
+
+zip:
+	zip pa1.zip main.c Makefile main.h
+
+clean: 
+	rm -f *.count main.o
+	clear
+
+depend:
+	makedepend $(SRCS)# DO NOT DELETE
