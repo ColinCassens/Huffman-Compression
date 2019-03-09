@@ -59,7 +59,7 @@ long count(FILE * fptr,FILE * count_file)
     long num_char = 0;
 
     //Runs a loop through Fptr
-    while((ascii_value = fgetc(fptr))!= EOF)
+    while((ascii_value = fgetc(fptr)) != EOF)
     {
         counter_arr[ascii_value]++;
         num_char++;
@@ -73,6 +73,8 @@ long count(FILE * fptr,FILE * count_file)
     return num_char;
 }
 
+//STATUS: IN PROG
+//TO DO: FINISH SORTING NUMBERS AND CREATING TREE
 
 void tree(FILE * fptr, FILE * tree_file, FILE * codefile)
 {
@@ -85,6 +87,7 @@ void tree(FILE * fptr, FILE * tree_file, FILE * codefile)
     }
 
     //Run a loop through the fptr WORKING
+    //Calculates Tree freq vals
     int ascii_value;
     int numchar = 0;
     while((ascii_value = fgetc(fptr))!= EOF)
@@ -98,7 +101,8 @@ void tree(FILE * fptr, FILE * tree_file, FILE * codefile)
     head->next = temp;
     int x = 0;
     int maxfreq = 0;
-    //Build linked list from array
+
+    //Build linked list from array working
     for(x = 0; x < numchar; x++)
     {
       int i = 0;
@@ -124,6 +128,7 @@ void tree(FILE * fptr, FILE * tree_file, FILE * codefile)
       }
     }
 
+    //Remove NULL node from list. Can be used as stack head but not needed
     temp = head;
     while(temp->next->next != NULL)
     {
@@ -134,13 +139,57 @@ void tree(FILE * fptr, FILE * tree_file, FILE * codefile)
     //Sort the code file based on count and ascii value
     //Do this by getting the nodes with that frequency and putting them in the correct order. Then add them to the array. Stack may be useful for this.
     Node * temp1 = head->next;
+    int max_ascii = 0;
     while(maxfreq != 0)
     {
+      if(temp1->freq != maxfreq)
+      {
+        temp1 = temp1->next;
+      }
+      if(temp1->freq == maxfreq)
+      {
+        //At least one node of this freq exists add the ndoe to stack and sort and add to front of list
+      }
+      else if(temp1->next == NULL)
+      {
+          //A Node with this frequency does not exist FUCK IT move on to the next freq
+      }
 
     }
 
     //Ceate the tree by taking the first two nodes and combining, then placing in the correct location
+    treeNode * stacknode = malloc(sizeof(treeNode));
+    while(head->next != NULL)
+    {
+      //Add the first two items of the list to the stack
+      stack->next = head->next;
+      head->next = head->next->next->next;
+      stack->next->next->next = NULL;
+      treeNode * newnode = malloc(sizeof(treeNode));
+      newNode->rightChild = stacknode->next;
+      newNode->leftChild = stacknode->next->next;
+      newNode->rightChild->next = NULL;
+      newNode->freq = newNode->rightChild->freq + newNode->leftChild->freq;
 
+
+
+      temp1 = head->next;
+      //Find the placement for this new node and put it there
+      while(newNode->freq > temp1->freq)
+      {
+        temp1 = temp1->next;
+      }
+      if(newNode->freq == temp1->freq)
+      {
+        //Compare ascii values
+      }
+      else{
+        //Place the new node here
+        newNode->next = temp1->next;
+        temp1->next = newNode->next;
+      }
+
+    }
 }
 
 treeNode * CN(int val, int freq)
