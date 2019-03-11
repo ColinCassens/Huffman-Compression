@@ -1,4 +1,3 @@
-//#ifdef TEST_MAIN
 #include "main.h"
 
 int main(int argc,char ** argv)
@@ -75,6 +74,7 @@ long count(FILE * fptr,FILE * count_file)
 
 //STATUS: IN PROG
 //TO DO: FINISH SORTING NUMBERS AND CREATING TREE
+//DO A SERIOUS REVIEW LAST CODE SESH WAS DRUNK
 
 void tree(FILE * fptr, FILE * tree_file, FILE * codefile)
 {
@@ -128,7 +128,7 @@ void tree(FILE * fptr, FILE * tree_file, FILE * codefile)
       }
     }
 
-    //Remove NULL node from list. Can be used as stack head but not needed
+    //Remove NULL node from list. Can be used as stack head but not needed Working
     temp = head;
     while(temp->next->next != NULL)
     {
@@ -142,68 +142,113 @@ void tree(FILE * fptr, FILE * tree_file, FILE * codefile)
     int max_ascii = 0;
     while(maxfreq != 0)
     {
-      if(temp1->freq != maxfreq)
+      while(temp1->next != NULL)
       {
-        temp1 = temp1->next;
-      }
-      if(temp1->freq == maxfreq)
-      {
-        //At least one node of this freq exists add the ndoe to stack and sort and add to front of list
-      }
-      else if(temp1->next == NULL)
-      {
-          //A Node with this frequency does not exist FUCK IT move on to the next freq
-      }
+        if(temp1->freq != maxfreq)
+        {
+          if(temp1->next != NULL)
+          {
+            temp1 = temp1->next;
+          }
+          else
+          {
+            temp = NULL;
+          }
+        }
+        else if(temp1->freq == maxfreq)
+        {
+          add_to_stack(stacknode,temp1,head);
 
+          //At least one node of this freq exists add the node to stack and sort and add to front of list
+          treeNode * temp2 = stacknode;
+          //Find the location to add the node
+          while(temp2->next != NULL)
+          {
+            temp2 = temp2->next;
+          }
+          //Add the node to stack memory
+          temp2->next = temp1;
+        }
+        if(temp1 == NULL)
+        {
+          sort_stack(stacknode,head->next);
+          //A Node with this frequency does not exist FUCK IT move on to the next freq
+          maxfreq--;
+          temp1 = head->next;
+        }
+      }
     }
+
+    /*Commented out to test above code*/
 
     //Ceate the tree by taking the first two nodes and combining, then placing in the correct location
-    treeNode * stacknode = malloc(sizeof(treeNode));
-    while(head->next != NULL)
-    {
-      //Add the first two items of the list to the stack
-      stack->next = head->next;
-      head->next = head->next->next->next;
-      stack->next->next->next = NULL;
-      treeNode * newnode = malloc(sizeof(treeNode));
-      newNode->rightChild = stacknode->next;
-      newNode->leftChild = stacknode->next->next;
-      newNode->rightChild->next = NULL;
-      newNode->freq = newNode->rightChild->freq + newNode->leftChild->freq;
-
-
-
-      temp1 = head->next;
-      //Find the placement for this new node and put it there
-      while(newNode->freq > temp1->freq)
-      {
-        temp1 = temp1->next;
-      }
-      if(newNode->freq == temp1->freq)
-      {
-        //Compare ascii values
-      }
-      else{
-        //Place the new node here
-        newNode->next = temp1->next;
-        temp1->next = newNode->next;
-      }
-
-    }
+    // treeNode * stacknode = malloc(sizeof(treeNode));
+    // while(head->next != NULL)
+    // {
+    //   //Add the first two items of the list to the stack
+    //   stack->next = head->next;
+    //   head->next = head->next->next->next;
+    //   stack->next->next->next = NULL;
+    //   treeNode * newnode = malloc(sizeof(treeNode));
+    //   newNode->rightChild = stacknode->next;
+    //   newNode->leftChild = stacknode->next->next;
+    //   newNode->rightChild->next = NULL;
+    //   newNode->freq = newNode->rightChild->freq + newNode->leftChild->freq;
+    //
+    //
+    //
+    //   temp1 = head->next;
+    //   //Find the placement for this new node and put it there
+    //   while(newNode->freq > temp1->freq)
+    //   {
+    //     temp1 = temp1->next;
+    //   }
+    //   if(newNode->freq == temp1->freq)
+    //   {
+    //     //Compare ascii values
+    //   }
+    //   else{
+    //     //Place the new node here
+    //     newNode->next = temp1->next;
+    //     temp1->next = newNode->next;
+    //   }
+    //
+    // }
 }
 
-treeNode * CN(int val, int freq)
+//ADDS THE NODE to the stack and removes it from the head list
+//Returns the next node in the list so the tree file can continue iteration
+treeNode * add_to_stack(treeNode * stacknode, treeNode * Node, treeNode * head)
 {
-    treeNode * temp = malloc(sizeof(treeNode));
-    temp -> ascii_value = val;
-    temp -> char_val = val;
-    temp -> freq = freq;
-    temp -> next = NULL;
-    temp -> dist = 0;
-    temp ->loc = 0;
-    temp -> rightChild = NULL;
-    temp -> leftChild = NULL;
-    return temp;
+  //Remove the node from the head list
+  treeNode * next = head;
+  while(next->next != Node)
+  {
+    next = next->next;
+  }
+  next->next = Node->next;
+  Node->next = NULL;
+
+  //Insert this node into the stack
+  treeNode * stacktemp = stacknode;
+  while(stacktemp->next != NULL)
+  {
+    stacktemp = stacktemp->next;
+  }
+  stacktemp->next = Node;
+
+  //returns the node after NODE
+  return next->next;
+}
+
+//Sorts the stack and places it at the front of the tree
+void * sort_stack(treeNode * stacknode,treeNode * head)
+{
+  //Sort StackNode
+
+  //Add to the start of the head list
+
+  
 }
 
 void WT(FILE * treefile,FILE * codefile, treeNode * node,long int byte,int bitcounter)
@@ -274,4 +319,3 @@ void freebin(treeNode * node)
     }
     free(node);
 }
-//#endif
