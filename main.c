@@ -119,65 +119,49 @@ void tree(FILE * fptr, FILE * tree_file, FILE * codefile)
           maxfreq = temp->freq;
         }
         counter_arr[i] = 0;
+
+        treeNode * search = head;
+        while(search->next != NULL && search->next != temp)
+        {
+          if(search->next->freq < temp->freq)
+          {
+            search = search->next;
+          }
+          else if(search->next->freq == temp->freq)
+          {
+            //Test for ascii values
+            if(search->next->ascii_value > temp->ascii_value)
+            {
+              //place it
+              temp->next = search->next;
+              search->next = temp;
+            }
+            else if(search->next->ascii_value < temp->ascii_value)
+            {
+              search = search->next;
+            }
+          }
+          else if(search->next->freq > temp->freq)
+          {
+            temp->next = search->next;
+            search->next = temp;
+          }
+          if(search->next == NULL && (temp->freq >= search->freq))
+          {
+            search->next = temp;
+            temp->next = NULL;
+          }
+        }
+
         treeNode * temp2 = malloc(sizeof(treeNode));
-        temp->next = temp2;
+        //temp->next = temp2;
         temp = temp2;
       }
-      else{
-        free(temp);
-      }
     }
 
-    //Remove NULL node from list. Can be used as stack head but not needed Working
-    temp = head;
-    while(temp->next->next != NULL)
-    {
-      temp = temp->next;
-    }
-    temp->next = NULL;
+    //Get rid of extra malloc for temp node
+    free(temp);
 
-    //Sort the code file based on count and ascii value
-    //Do this by getting the nodes with that frequency and putting them in the correct order. Then add them to the array. Stack may be useful for this.
-    Node * temp1 = head->next;
-    int max_ascii = 0;
-    while(maxfreq != 0)
-    {
-      while(temp1->next != NULL)
-      {
-        if(temp1->freq != maxfreq)
-        {
-          if(temp1->next != NULL)
-          {
-            temp1 = temp1->next;
-          }
-          else
-          {
-            temp = NULL;
-          }
-        }
-        else if(temp1->freq == maxfreq)
-        {
-          add_to_stack(stacknode,temp1,head);
-
-          //At least one node of this freq exists add the node to stack and sort and add to front of list
-          treeNode * temp2 = stacknode;
-          //Find the location to add the node
-          while(temp2->next != NULL)
-          {
-            temp2 = temp2->next;
-          }
-          //Add the node to stack memory
-          temp2->next = temp1;
-        }
-        if(temp1 == NULL)
-        {
-          sort_stack(stacknode,head->next);
-          //A Node with this frequency does not exist FUCK IT move on to the next freq
-          maxfreq--;
-          temp1 = head->next;
-        }
-      }
-    }
 
     /*Commented out to test above code*/
 
@@ -242,13 +226,12 @@ treeNode * add_to_stack(treeNode * stacknode, treeNode * Node, treeNode * head)
 }
 
 //Sorts the stack and places it at the front of the tree
-void * sort_stack(treeNode * stacknode,treeNode * head)
+void sort_stack(treeNode * stacknode,treeNode * head)
 {
   //Sort StackNode
 
   //Add to the start of the head list
 
-  
 }
 
 void WT(FILE * treefile,FILE * codefile, treeNode * node,long int byte,int bitcounter)
