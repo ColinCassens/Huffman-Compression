@@ -22,7 +22,7 @@ int main(int argc,char ** argv)
     long num_characters = count(fptr, count_file);
     printf("%ld\n",num_characters);
     //PRODUCE TREE FILE (PRE-ORDER)
-    FILE * treeFile = fopen(argv[3],"wb");
+    FILE * treeFile = fopen(argv[3],"w");
     FILE * codefile = fopen(argv[4],"w");
     tree(fptr, treeFile, codefile);
     fclose(treeFile);
@@ -209,4 +209,23 @@ void tree(FILE * fptr, FILE * tree_file, FILE * codefile)
         temp->next = newNode;
       }
     }
+
+    Write_tree(tree_file,codefile,head->next);
+    return;
+}
+
+void Write_tree(FILE * treefile, FILE * codefile, treeNode * node)
+{
+  int zero = 0;
+  int one = 1;
+  if(node->rightChild != NULL && node->leftChild != NULL)
+  {
+    fprintf(treefile,"%d",zero);
+    Write_tree(treefile, codefile, node->leftChild);
+    Write_tree(treefile, codefile, node->rightChild);
+  }
+  else{
+    fprintf(treefile,"%d%c",one,node->char_val);
+  }
+  return;
 }

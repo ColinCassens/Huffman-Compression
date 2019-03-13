@@ -57,7 +57,7 @@ zip:
 	zip pa1.zip main.c Makefile main.h
 
 clean:
-	rm -f *.count *.tree *.code *.hbt main.o valgrind.log
+	rm -f *.count *.tree *.code *.hbt *.o valgrind.log
 	clear
 
 depend:
