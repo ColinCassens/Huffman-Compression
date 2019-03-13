@@ -20,12 +20,16 @@ typedef struct tNode
   int freq;
   int loc;
   int dist;
+
+  //FOR CREATING THE CODE FILE
+  int bin_code;
+  int tree_height; //TELLS US THE TOTAL NUMBER OF CHARACTERS IT SHOULD BE
 } treeNode;
 
 //WORKING
 int main(int argc,char ** argv);
 long count(FILE*file1, FILE * binary_file);
-void tree(FILE*file1, FILE*treeFile, FILE*countfile);
+treeNode * tree(FILE*file1, FILE*treeFile, FILE*countfile);
 //IN PROG.
 void Write_tree(FILE * treefile, FILE * codefile, treeNode * node);
 //OBSOLETE

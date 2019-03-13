@@ -39,13 +39,13 @@ test3: pa1
 test4: pa1
 	./pa1 pa1_examples/original/lorum lorum.count lorum.tree lorum.code lorum.hbt 	# Almost there
 	diff lorum.count pa1_examples/count/lorum.count
-	diff lorum.tree pa1_examples/tree/lorum.tree		# Not working
+	diff lorum.tree pa1_examples/tree/lorum.tree		
 
 #Not working
 test5: pa1
-	./pa1 pa1_examples/original/binary1 binary1.count binary1.tree binary1.code binary1.hbt # Core Dump Again
+	./pa1 pa1_examples/original/binary1 binary1.count binary1.tree binary1.code binary1.hbt
 	diff binary1.count pa1_examples/count/binary1.count
-	diff binary1.tree pa1_examples/tree/binary1.tree 	# Core Dump
+	diff binary1.tree pa1_examples/tree/binary1.tree 	
 
 test6: pa1
 	./pa1 pa1_examples/original/empty empty.count empty.tree empty.code empty.hbt

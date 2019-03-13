@@ -24,11 +24,14 @@ int main(int argc,char ** argv)
     //PRODUCE TREE FILE (PRE-ORDER)
     FILE * treeFile = fopen(argv[3],"w");
     FILE * codefile = fopen(argv[4],"w");
-    tree(fptr, treeFile, codefile);
+    
+    if(num_characters > 0)
+    {
+      treeNode * head = tree(fptr, treeFile, codefile);
+    }
     fclose(treeFile);
 
-    //FILE * tree_top = fopen(argv[3],"r");
-    //FILE * compressed = fopen(argv[5],"wb");
+    
     //compression(fptr,tree_top,codefile,compressed,num_characters);
 
     //fclose(tree_top);
@@ -72,11 +75,11 @@ long count(FILE * fptr,FILE * count_file)
     return num_char;
 }
 
-//STATUS: IN PROG
-//TO DO: FINISH SORTING NUMBERS AND CREATING TREE
-//DO A SERIOUS REVIEW LAST CODE SESH WAS DRUNK
 
-void tree(FILE * fptr, FILE * tree_file, FILE * codefile)
+
+//STATUS: DONE
+//TO DO: NONE
+treeNode * tree(FILE * fptr, FILE * tree_file, FILE * codefile)
 {
     //GET THE ARR OF FREQUENCIES FOR THE INPUT FILE
     fseek(fptr,0,SEEK_SET);
@@ -211,7 +214,7 @@ void tree(FILE * fptr, FILE * tree_file, FILE * codefile)
     }
 
     Write_tree(tree_file,codefile,head->next);
-    return;
+    return head->next;
 }
 
 void Write_tree(FILE * treefile, FILE * codefile, treeNode * node)
@@ -224,7 +227,7 @@ void Write_tree(FILE * treefile, FILE * codefile, treeNode * node)
     Write_tree(treefile, codefile, node->leftChild);
     Write_tree(treefile, codefile, node->rightChild);
   }
-  else{
+  else if(node->freq > 0){
     fprintf(treefile,"%d%c",one,node->char_val);
   }
   return;
