@@ -102,7 +102,7 @@ void tree(FILE * fptr, FILE * tree_file, FILE * codefile)
     int x = 0;
     int maxfreq = 0;
 
-    //Build linked list from array working
+    //Build linked list from array In SORTED order working
     for(x = 0; x < numchar; x++)
     {
       int i = 0;
@@ -159,146 +159,54 @@ void tree(FILE * fptr, FILE * tree_file, FILE * codefile)
       }
     }
 
-    //Get rid of extra malloc for temp node
     free(temp);
+    //Get rid of extra malloc for temp node
+    temp = head;
+    treeNode * tempz = NULL;
+    while(temp->next != NULL)
+    {
+      tempz = temp;
+      temp = temp->next;
+    }
+    if(temp->ascii_value == 256)
+    {
+      tempz->next = NULL;
+      free(temp);
+    }
 
-
-    /*Commented out to test above code*/
 
     //Ceate the tree by taking the first two nodes and combining, then placing in the correct location
-    // treeNode * stacknode = malloc(sizeof(treeNode));
-    // while(head->next != NULL)
-    // {
-    //   //Add the first two items of the list to the stack
-    //   stack->next = head->next;
-    //   head->next = head->next->next->next;
-    //   stack->next->next->next = NULL;
-    //   treeNode * newnode = malloc(sizeof(treeNode));
-    //   newNode->rightChild = stacknode->next;
-    //   newNode->leftChild = stacknode->next->next;
-    //   newNode->rightChild->next = NULL;
-    //   newNode->freq = newNode->rightChild->freq + newNode->leftChild->freq;
-    //
-    //
-    //
-    //   temp1 = head->next;
-    //   //Find the placement for this new node and put it there
-    //   while(newNode->freq > temp1->freq)
-    //   {
-    //     temp1 = temp1->next;
-    //   }
-    //   if(newNode->freq == temp1->freq)
-    //   {
-    //     //Compare ascii values
-    //   }
-    //   else{
-    //     //Place the new node here
-    //     newNode->next = temp1->next;
-    //     temp1->next = newNode->next;
-    //   }
-    //
-    // }
-}
-
-//ADDS THE NODE to the stack and removes it from the head list
-//Returns the next node in the list so the tree file can continue iteration
-treeNode * add_to_stack(treeNode * stacknode, treeNode * Node, treeNode * head)
-{
-  //Remove the node from the head list
-  treeNode * next = head;
-  while(next->next != Node)
-  {
-    next = next->next;
-  }
-  next->next = Node->next;
-  Node->next = NULL;
-
-  //Insert this node into the stack
-  treeNode * stacktemp = stacknode;
-  while(stacktemp->next != NULL)
-  {
-    stacktemp = stacktemp->next;
-  }
-  stacktemp->next = Node;
-
-  //returns the node after NODE
-  return next->next;
-}
-
-//Sorts the stack and places it at the front of the tree
-void sort_stack(treeNode * stacknode,treeNode * head)
-{
-  //Sort StackNode
-
-  //Add to the start of the head list
-
-}
-
-void WT(FILE * treefile,FILE * codefile, treeNode * node,long int byte,int bitcounter)
-{
-    int zero = 0;
-    int one = 1;
-    int mask = 0x1;
-    long int tempbyte = 0x0;
-    if(node -> leftChild != NULL)
+    treeNode * stacknode = malloc(sizeof(treeNode));
+    while(head->next->next != NULL) //The node head->next will be the root of the tree
     {
-        fprintf(treefile,"%d",zero);
-        tempbyte = byte<<1;
-        node->leftChild->loc = node->loc * 10;
-        WT(treefile,codefile,node->leftChild,tempbyte,bitcounter+1);
-    }
-    if(node->rightChild != NULL)
-    {
-        tempbyte = (byte<<1) | mask;
-        node->rightChild->loc = node->loc * 10 + 1;
-        WT(treefile,codefile,node->rightChild,tempbyte,bitcounter+1);
-    }
-    if(node->rightChild == NULL && node->leftChild == NULL)
-    {
-        fprintf(treefile,"%d",one);
-        fprintf(treefile,"%c",node->char_val);
-        WriteCode(codefile,&node->char_val,node->loc,bitcounter);
-    }
-}
+      //Add the first two items of the list to the stack
+      stacknode->next = head->next;
+      head->next = head->next->next->next;
+      stacknode->next->next->next = NULL;
 
-void WriteCode(FILE * codefile, char * char_val,long int byte,int bitcounter)
-{
-    int ascii_value = *char_val;
-    byte = byte * 10 + 9;
-    long int reverse = 0;
-    while(byte !=  0)
-    {
-        reverse = reverse * 10;
-        reverse = reverse + byte%10;
-        byte = byte/10;
-    }
-    reverse = reverse / 10;
-    master_list[ascii_value] = reverse;
-    //nt * x = malloc(sizeof(int));
-    // *x = *char_val;
-    // if(*x != NULL)
-    // {
-    //     fprintf(codefile,"%s:",char_val);
-    //     while(reverse%10 != 9 && reverse > 0)
-    //     {
-    //         fprintf(codefile,"%ld",reverse%10);
-    //         reverse = reverse / 10;
-    //     }
-    //     fprintf(codefile,"\n");
-    // }
+      //Create the new root node from the nodes in the stack
+      treeNode * newNode = malloc(sizeof(treeNode));
+      newNode->leftChild = stacknode->next;
+      newNode->rightChild = stacknode->next->next;
+      newNode->leftChild->next = NULL;
+      newNode->freq = newNode->rightChild->freq + newNode->leftChild->freq;
+      stacknode->next = NULL;
 
-}
-
-
-void freebin(treeNode * node)
-{
-    if(node->rightChild != NULL)
-    {
-        freebin(node->rightChild);
+      //Place the root node in the linked list
+      temp = head;
+      while(temp->next != NULL && temp->next->freq <= newNode->freq)
+      {
+        temp = temp->next;
+      }
+      if(temp->next == NULL)
+      {
+        temp->next = newNode;
+        newNode->next = NULL;
+      }
+      else if(temp->next->freq > newNode->freq)
+      {
+        newNode->next = temp->next;
+        temp->next = newNode;
+      }
     }
-    if(node->leftChild != NULL)
-    {
-        freebin(node->leftChild);
-    }
-    free(node);
 }
