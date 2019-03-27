@@ -30,11 +30,11 @@ void huffman(FILE * infile, FILE * outfile, int * bin_list, int * len_list, long
     fseek(treefile, 0, SEEK_SET);
     int buffer = 0;
     int num = 0;
-    long ascii = 0;
+    int ascii = 0;
     int x = 1;
     while(x != EOF)
     {
-        x = fscanf(treefile,"%ld",&ascii);
+        x = fscanf(treefile,"%1d",&ascii);
         //0
         if(ascii == 0)
         {
@@ -49,26 +49,27 @@ void huffman(FILE * infile, FILE * outfile, int * bin_list, int * len_list, long
             char hold;
             x = fscanf(treefile,"%c",&hold);
             ascii = hold;
-            int len = 8;
-            while(len > 0)
+            int len = 0;
+            while(len < 8)
             {
-                int shifted = (ascii >> (len - 1)) & 1;
+                ascii = hold;
+                int shifted = (ascii >> len) & 1;
                 buffer = (buffer << 1) | shifted;
-                len--;
+                len++;
                 num++;
                 if(num == 8)
                 {
-//                    //Flip Digits NOT SURE IF NECCISSARY
-//                    int k = 0;
-//                    int n = 0;
-//                    int s = 0;
-//                    while(k < 8)
-//                    {
-//                        s = (buffer >> k) & 1;
-//                        n = (n << 1) | s;
-//                        k++;
-//                    }
-                    fputc(buffer,outfile);
+                    //Flip Digits NOT SURE IF NECCISSARY
+                    int k = 0;
+                    int n = 0;
+                    int s = 0;
+                    while(k < 8)
+                    {
+                        s = (buffer >> k) & 1;
+                        n = (n << 1) | s;
+                        k++;
+                    }
+                    fputc(n,outfile);
                     num = 0;
                     buffer = 0;
                 }
