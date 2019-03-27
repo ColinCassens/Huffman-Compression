@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="8903d997-0b72-4dfc-a653-f599ea6aff22" name="ECE GRID ACCOUNT" url="http://ecegrid-thin7.ecn.purdue.edu">
+        <fileTransfer host="ecegrid-thin7.ecn.purdue.edu" port="22" rootFolder="/home/shay/a/ccassens" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

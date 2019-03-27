@@ -20,23 +20,30 @@ int main(int argc,char ** argv)
         return EXIT_FAILURE;
     }
     long num_characters = count(fptr, count_file);
-    printf("%ld\n",num_characters);
-    //PRODUCE TREE FILE (PRE-ORDER)
-    FILE * treeFile = fopen(argv[3],"w");
-    FILE * codefile = fopen(argv[4],"w");
     
+    //PRODUCE TREE FILE (PRE-ORDER)
+    //AS WELL AS THE CODE FILE
+    FILE * treeFile = fopen(argv[3],"w+");
+    FILE * codefile = fopen(argv[4],"w");
+    treeNode * head = NULL;
     if(num_characters > 0)
     {
-      treeNode * head = tree(fptr, treeFile, codefile);
+      head = tree(fptr, treeFile, codefile, num_characters);
+    
+      long tree_size = ftell(treeFile) / 2;
+      tree_size = tree_size - 1;
+      fclose(codefile);
+    
+      //create the binary lists, 1 for length 1 for code
+      int * bin_list = malloc(256 * sizeof(int));
+      int * len_list = malloc(256 * sizeof(int));
+      create_list(head,bin_list,len_list);
+
+      //Write the compressed file
+      FILE * outfile = fopen(argv[5],"wb");
+      huffman(fptr, outfile, bin_list, len_list, tree_size, num_characters, treeFile);
     }
     fclose(treeFile);
-
-    
-    //compression(fptr,tree_top,codefile,compressed,num_characters);
-
-    //fclose(tree_top);
-    //fclose(compressed);
-    //fclose(codefile);
     fclose(count_file);
     fclose(fptr);
 
@@ -79,7 +86,7 @@ long count(FILE * fptr,FILE * count_file)
 
 //STATUS: DONE
 //TO DO: NONE
-treeNode * tree(FILE * fptr, FILE * tree_file, FILE * codefile)
+treeNode * tree(FILE * fptr, FILE * tree_file, FILE * codefile, long num_characters)
 {
     //GET THE ARR OF FREQUENCIES FOR THE INPUT FILE
     fseek(fptr,0,SEEK_SET);
@@ -159,14 +166,14 @@ treeNode * tree(FILE * fptr, FILE * tree_file, FILE * codefile)
         treeNode * temp2 = malloc(sizeof(treeNode));
         //temp->next = temp2;
         temp = temp2;
+        temp->freq = 0;
       }
     }
 
-    free(temp);
     //Get rid of extra malloc for temp node
     temp = head;
     treeNode * tempz = NULL;
-    while(temp->next != NULL)
+    while(temp->next != NULL && temp->ascii_value != 1)
     {
       tempz = temp;
       temp = temp->next;
@@ -176,6 +183,7 @@ treeNode * tree(FILE * fptr, FILE * tree_file, FILE * codefile)
       tempz->next = NULL;
       free(temp);
     }
+
 
 
     //Ceate the tree by taking the first two nodes and combining, then placing in the correct location
@@ -211,24 +219,66 @@ treeNode * tree(FILE * fptr, FILE * tree_file, FILE * codefile)
         newNode->next = temp->next;
         temp->next = newNode;
       }
-    }
-
-    Write_tree(tree_file,codefile,head->next);
+      }
+    
+    int cur_path = -1;
+    int depth = 0;
+    Write_tree(tree_file,codefile,head->next, cur_path, depth, num_characters);
     return head->next;
 }
 
-void Write_tree(FILE * treefile, FILE * codefile, treeNode * node)
+void Write_tree(FILE * treefile, FILE * codefile, treeNode * node, int cur_path, int depth, long num_characters)
 {
+  if(node->freq > num_characters && node->leftChild->freq == num_characters)
+  {
+    Write_tree(treefile, codefile, node->rightChild, cur_path,depth,num_characters);
+    return;
+  }
   int zero = 0;
   int one = 1;
   if(node->rightChild != NULL && node->leftChild != NULL)
   {
+    //WRITE TREE FILE
     fprintf(treefile,"%d",zero);
-    Write_tree(treefile, codefile, node->leftChild);
-    Write_tree(treefile, codefile, node->rightChild);
+    /////////////////
+
+    int cur_left, cur_right;
+    if(cur_path == -1)
+    {
+      cur_left = 0;
+      cur_right = 1;
+    }
+    else{
+      cur_left = (cur_path << 1) | 0;
+      cur_right = (cur_path << 1) | 1;
+    }
+
+    Write_tree(treefile, codefile, node->leftChild, cur_left, depth+1, num_characters);
+    Write_tree(treefile, codefile, node->rightChild, cur_right, depth+1, num_characters);
+    //////////////////
+
+
   }
-  else if(node->freq > 0){
+  else if(node->freq > 0 && node->ascii_value < 256){
+    //WRITE TREE FILE
     fprintf(treefile,"%d%c",one,node->char_val);
+    /////////////////
+
+    node->bin_code = cur_path;
+    node->tree_height = depth;
+    
+    //PRINT CHARACTER
+    fprintf(codefile,"%c:",node->char_val);
+    //PRINT CODE VALUE
+    int len = node->tree_height;
+    while(len > 0)
+    {
+      int code = node->bin_code;
+      int shifted = (code >> (len-1)) & 1;
+      fprintf(codefile,"%d",shifted);
+      len--;
+    }
+    fprintf(codefile,"\n");
   }
   return;
 }
