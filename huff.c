@@ -25,7 +25,7 @@ void huffman(FILE * infile, FILE * outfile, int * bin_list, int * len_list, long
     fwrite(&num_char,sizeof(long),1,outfile);
 
     //WRITE THE TOPOLOGY OF THE HUFFMAN TREE
-    //write_top(head, outfile);
+    //write_top(head, outfile); starting to work
     //NOT WORKING
     fseek(treefile, 0, SEEK_SET);
     int buffer = 0;
@@ -59,7 +59,7 @@ void huffman(FILE * infile, FILE * outfile, int * bin_list, int * len_list, long
                 num++;
                 if(num == 8)
                 {
-                    //Flip Digits NOT SURE IF NECCISSARY
+                    //Flip Digits
                     int k = 0;
                     int n = 0;
                     int s = 0;
@@ -74,7 +74,23 @@ void huffman(FILE * infile, FILE * outfile, int * bin_list, int * len_list, long
                     buffer = 0;
                 }
             }
-        }     
+        }
+        if(num == 8)
+        {
+            //Flip Digits Nice
+            int k = 0;
+            int n = 0;
+            int s = 0;
+            while(k < 8)
+            {
+                s = (buffer >> k) & 1;
+                n = (n << 1) | s;
+                k++;
+            }
+            fputc(n,outfile);
+            num = 0;
+            buffer = 0;
+        }
     }
 
 
