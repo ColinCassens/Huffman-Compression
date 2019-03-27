@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="ECE GRID ACCOUNT">
+  <component name="PublishConfigData" autoUpload="Always" serverName="ECE GRID ACCOUNT" uploadOnCheckin="8903d997-0b72-4dfc-a653-f599ea6aff22">
     <serverData>
       <paths name="ECE GRID ACCOUNT">
         <serverdata>
@@ -10,5 +10,7 @@
         </serverdata>
       </paths>
     </serverData>
+    <option name="myUploadOnCheckinName" value="ECE GRID ACCOUNT" />
+    <option name="myAutoUpload" value="ALWAYS" />
   </component>
 </project>
