@@ -10,7 +10,7 @@ void create_list(treeNode * head,int * bin_list,int * len_list)
         create_list(head->leftChild,bin_list,len_list);
         create_list(head->rightChild,bin_list,len_list);
     }
-    else{
+    else {
         bin_list[head->ascii_value] = head->bin_code;
         len_list[head->ascii_value] = head->tree_height;
     }
@@ -30,11 +30,11 @@ void huffman(FILE * infile, FILE * outfile, int * bin_list, int * len_list, long
     fseek(treefile, 0, SEEK_SET);
     int buffer = 0;
     int num = 0;
-    int ascii = 0;
+    long ascii = 0;
     int x = 1;
     while(x != EOF)
     {
-        x = fscanf(treefile,"%1d",&ascii);
+        x = fscanf(treefile,"%ld",&ascii);
         //0
         if(ascii == 0)
         {
@@ -58,22 +58,21 @@ void huffman(FILE * infile, FILE * outfile, int * bin_list, int * len_list, long
                 num++;
                 if(num == 8)
                 {
-                    //Flip Digits NOT SURE IF NECCISSARY
-                    int k = 0;
-                    int n = 0;
-                    int s = 0;
-                    while(k < 8)
-                    {
-                        s = (buffer >> k) & 1;
-                        n = (n << 1) | s;
-                        k++;
-                    }
-                    fputc(n,outfile);
+//                    //Flip Digits NOT SURE IF NECCISSARY
+//                    int k = 0;
+//                    int n = 0;
+//                    int s = 0;
+//                    while(k < 8)
+//                    {
+//                        s = (buffer >> k) & 1;
+//                        n = (n << 1) | s;
+//                        k++;
+//                    }
+                    fputc(buffer,outfile);
                     num = 0;
                     buffer = 0;
                 }
             }
-
         }     
     }
 
