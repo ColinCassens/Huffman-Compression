@@ -10,7 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c3cf8fe9-ef75-4dde-8b79-71072f26eb5d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/huff.c" beforeDir="false" afterPath="$PROJECT_DIR$/huff.c" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -41,8 +41,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/huff.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="8" lean-forward="true" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="8" />
+            <state relative-caret-position="225">
+              <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -124,7 +124,7 @@
       <workItem from="1548646572272" duration="1450000" />
       <workItem from="1553619839817" duration="312000" />
       <workItem from="1553621818102" duration="958000" />
-      <workItem from="1553711235822" duration="395000" />
+      <workItem from="1553711235822" duration="654000" />
     </task>
     <task id="LOCAL-00001" summary="Clion Push">
       <created>1553711553781</created>
@@ -133,11 +133,18 @@
       <option name="project" value="LOCAL" />
       <updated>1553711553781</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Clion Push">
+      <created>1553711717172</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1553711717172</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3115000" />
+    <option name="totallyTimeSpent" value="3374000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -150,12 +157,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49908924" visible="true" weight="0.21489622" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49908924" visible="true" weight="0.21489622" />
       <window_info id="Structure" order="1" sideWeight="0.50091076" side_tool="true" weight="0.2496318" />
       <window_info id="Favorites" order="2" sideWeight="0.50091076" side_tool="true" weight="0.2496318" />
-      <window_info anchor="bottom" id="File Transfer" visible="true" weight="0.32959184" />
+      <window_info anchor="bottom" id="File Transfer" weight="0.32959184" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -164,7 +170,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32967034" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.32959184" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.32959184" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.32959184" />
       <window_info anchor="bottom" id="CMake" order="11" weight="0.2755102" />
@@ -208,8 +214,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/huff.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="8" lean-forward="true" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="8" />
+        <state relative-caret-position="225">
+          <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
         </state>
       </provider>
     </entry>

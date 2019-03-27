@@ -14,7 +14,6 @@ void create_list(treeNode * head,int * bin_list,int * len_list)
         bin_list[head->ascii_value] = head->bin_code;
         len_list[head->ascii_value] = head->tree_height;
     }
-    FUCK
 }
 
 void huffman(FILE * infile, FILE * outfile, int * bin_list, int * len_list, long tree_size, long num_char, FILE * treefile)
