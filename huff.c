@@ -89,6 +89,28 @@ void huffman(FILE * infile, FILE * outfile, int * bin_list, int * len_list, long
                 fputc(n,outfile);
                 num = 0;
                 buffer = 0;
+                len = 0;
+                while(len < 8){
+                    ascii = hold;
+                    int shifted = (ascii >> len) & 1;
+                    buffer = (buffer << 1) | shifted;
+                    len++;
+                    num++;
+                    if (num == 8) {
+                        //Flip Digits
+                        k = 0;
+                        n = 0;
+                        s = 0;
+                        while (k < 8) {
+                            s = (buffer >> k) & 1;
+                            n = (n << 1) | s;
+                            k++;
+                        }
+                        fputc(n, outfile);
+                        num = 0;
+                        buffer = 0;
+                    }
+                }
             }
         }
         if(num == 8)
@@ -108,6 +130,27 @@ void huffman(FILE * infile, FILE * outfile, int * bin_list, int * len_list, long
             buffer = 0;
         }
     }
+
+    if(num != 0){
+        while(num != 8){
+            buffer = buffer << 1;
+            num++;
+        }
+        //Flip Digits Nice
+        int k = 0;
+        int n = 0;
+        int s = 0;
+        while(k < 8)
+        {
+            s = (buffer >> k) & 1;
+            n = (n << 1) | s;
+            k++;
+        }
+        fputc(n,outfile);
+        num = 0;
+        buffer = 0;
+    }
+
 
 
     //WRITE THE FILE IN COMPRESSED FORMAT WORKING
