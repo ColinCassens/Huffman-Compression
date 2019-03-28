@@ -33,7 +33,7 @@ int main(int argc,char ** argv)
       long tree_size = ftell(treeFile) / 2;
       tree_size = tree_size - 1;
       fclose(codefile);
-    
+
       //create the binary lists, 1 for length 1 for code
       int * bin_list = calloc(256, sizeof(int));
       int * len_list = calloc(256, sizeof(int));
@@ -120,11 +120,11 @@ treeNode * tree(FILE * fptr, FILE * tree_file, FILE * codefile, long num_charact
     for(x = 0; x < numchar; x++)
     {
       int i = 0;
-      while((counter_arr[i] == 0) && (i < 256))
+      while(i < 256 && (counter_arr[i] == 0))
       {
         i++;
       }
-      if(!((i == 256) && (counter_arr[i] <= 0)))
+      if((i != 256) && (counter_arr[i] > 0))
       {
         temp->ascii_value = i;
         temp->char_val = i;

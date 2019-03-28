@@ -12,7 +12,9 @@ void create_list(treeNode * head,int * bin_list,int * len_list)
     }
     else {
         bin_list[head->ascii_value] = head->bin_code;
-        len_list[head->ascii_value] = head->tree_height;
+        if(head->ascii_value < 256){
+            len_list[head->ascii_value] = head->tree_height;
+        }
     }
 }
 
@@ -170,7 +172,10 @@ void huffman(FILE * infile, FILE * outfile, int * bin_list, int * len_list, long
     while(ascii != EOF)
     {
         ascii = fgetc(infile);
-        int len = len_list[ascii];
+        int len;
+        if(ascii < 256){
+            len = len_list[ascii];
+        }
         while(len > 0)
         {
             int bin = bin_list[ascii];
