@@ -42,6 +42,10 @@ int main(int argc,char ** argv)
       //Write the compressed file
       FILE * outfile = fopen(argv[5],"wb");
       huffman(fptr, outfile, bin_list, len_list, tree_size, num_characters, treeFile);
+
+      freetree(head);
+      free(bin_list);
+      free(len_list);
     }
     fclose(treeFile);
     fclose(count_file);
@@ -220,11 +224,14 @@ treeNode * tree(FILE * fptr, FILE * tree_file, FILE * codefile, long num_charact
         temp->next = newNode;
       }
       }
-    
+
     int cur_path = -1;
     int depth = 0;
     Write_tree(tree_file,codefile,head->next, cur_path, depth, num_characters);
-    return head->next;
+    temp = head->next;
+    free(head);
+    free(stacknode);
+    return temp;
 }
 
 void Write_tree(FILE * treefile, FILE * codefile, treeNode * node, int cur_path, int depth, long num_characters)
@@ -281,4 +288,16 @@ void Write_tree(FILE * treefile, FILE * codefile, treeNode * node, int cur_path,
     fprintf(codefile,"\n");
   }
   return;
+}
+
+void freetree(treeNode * head)
+{
+    if(head->leftChild != NULL){
+        freetree(head->leftChild);
+    }
+    if(head->rightChild != NULL){
+        freetree(head->rightChild);
+    }
+    free(head);
+    return;
 }

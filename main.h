@@ -36,5 +36,6 @@ void Write_tree(FILE * treefile, FILE * codefile, treeNode * node, int cur_path,
 void create_list(treeNode * head,int * bin_list,int * len_list);
 void huffman(FILE * infile, FILE * outfile, int * bin_list, int * len_list, long tree, long num_char, FILE * treefile);
 void write_top(treeNode * node, FILE * outfile);
+void freetree(treeNode * head);
 
 #endif
