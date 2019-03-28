@@ -180,7 +180,6 @@ void huffman(FILE * infile, FILE * outfile, int * bin_list, int * len_list, long
             len--;
             if(num == 8)
             {
-                num_output += 8;
                 //REVERSE THE ORDER OF THE BIT
                 int l = 0;
                 int new = 0;
@@ -222,6 +221,7 @@ void huffman(FILE * infile, FILE * outfile, int * bin_list, int * len_list, long
         num_output++;
     }
 
+    num_output += 8 * 3;
     //Overwrites correctly, calculating value is wrong
     fseek(outfile,0,SEEK_SET);
     fwrite(&num_output,sizeof(long),1,outfile);

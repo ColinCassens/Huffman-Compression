@@ -21,25 +21,28 @@ test1: pa1
 	diff gophers.count pa1_examples/count/gophers.count
 	diff gophers.tree pa1_examples/tree/gophers.tree
 	diff gophers.code pa1_examples/code/gophers.code
-	#diff gophers.hbt pa1_examples/compressed/gophers.hbt
+	diff gophers.hbt pa1_examples/compressed/gophers.hbt
 
 test2: pa1
 	./pa1 pa1_examples/original/woods woods.count woods.tree woods.code woods.hbt
 	diff woods.count pa1_examples/count/woods.count
 	diff woods.tree pa1_examples/tree/woods.tree
 	diff woods.code pa1_examples/code/woods.code
+	diff woods.hbt pa1_examples/compressed/woods.hbt
 
 test3: pa1
 	./pa1 pa1_examples/original/stone stone.count stone.tree stone.code stone.hbt
 	diff stone.count pa1_examples/count/stone.count
 	diff stone.tree pa1_examples/tree/stone.tree
 	diff stone.code pa1_examples/code/stone.code
+	diff stone.hbt pa1_examples/compressed/stone.hbt
 
 test4: pa1
 	./pa1 pa1_examples/original/lorum lorum.count lorum.tree lorum.code lorum.hbt 	# Almost there
 	diff lorum.count pa1_examples/count/lorum.count
 	diff lorum.tree pa1_examples/tree/lorum.tree
-	diff lorum.code pa1_examples/code/lorum.code		
+	diff lorum.code pa1_examples/code/lorum.code
+	diff lorum.hbt pa1_examples/compressed/lorum.hbt
 
 test5: pa1
 	./pa1 pa1_examples/original/binary1 binary1.count binary1.tree binary1.code binary1.hbt
@@ -53,6 +56,7 @@ test6: pa1
 	diff empty.count pa1_examples/count/empty.count
 	diff empty.tree pa1_examples/tree/empty.tree
 	diff empty.code pa1_examples/code/empty.code
+	diff empty.hbt pa1_examples/compressed/empty.hbt
 
 zip:
 	zip pa1.zip main.c Makefile main.h
