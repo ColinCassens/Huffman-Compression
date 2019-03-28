@@ -22,8 +22,10 @@ void huffman(FILE * infile, FILE * outfile, int * bin_list, int * len_list, long
     long num_output = 0;
     fwrite(&num_output,sizeof(long),1,outfile);
     fwrite(&tree_size,sizeof(long),1,outfile);
+    //WORKING
     fwrite(&num_char,sizeof(long),1,outfile);
 
+    num_output = 0;
     //WRITE THE TOPOLOGY OF THE HUFFMAN TREE
     //write_top(head, outfile); starting to work
     //WORKING
@@ -69,6 +71,7 @@ void huffman(FILE * infile, FILE * outfile, int * bin_list, int * len_list, long
                             k++;
                         }
                         fputc(n, outfile);
+                        num_output++;
                         num = 0;
                         buffer = 0;
                     }
@@ -87,6 +90,7 @@ void huffman(FILE * infile, FILE * outfile, int * bin_list, int * len_list, long
                     k++;
                 }
                 fputc(n,outfile);
+                num_output++;
                 num = 0;
                 buffer = 0;
                 len = 0;
@@ -107,6 +111,7 @@ void huffman(FILE * infile, FILE * outfile, int * bin_list, int * len_list, long
                             k++;
                         }
                         fputc(n, outfile);
+                        num_output++;
                         num = 0;
                         buffer = 0;
                     }
@@ -126,6 +131,7 @@ void huffman(FILE * infile, FILE * outfile, int * bin_list, int * len_list, long
                 k++;
             }
             fputc(n,outfile);
+            num_output++;
             num = 0;
             buffer = 0;
         }
@@ -147,10 +153,13 @@ void huffman(FILE * infile, FILE * outfile, int * bin_list, int * len_list, long
             k++;
         }
         fputc(n,outfile);
+        num_output++;
         num = 0;
         buffer = 0;
     }
 
+    //Overwrites correctly, calculating value is wrong
+    tree_size = num_output;
 
 
     //WRITE THE FILE IN COMPRESSED FORMAT WORKING
@@ -186,6 +195,7 @@ void huffman(FILE * infile, FILE * outfile, int * bin_list, int * len_list, long
 
                 //WRITE THE BIT
                 fputc(new,outfile);
+                num_output++;
                 buffer = 0;
                 num = 0;
             }
@@ -193,7 +203,7 @@ void huffman(FILE * infile, FILE * outfile, int * bin_list, int * len_list, long
     }
     if(num != 0)
     {
-        num_output += num;
+        //num_output += num;
         num = 8 - num;
         buffer = buffer << num;
 
@@ -209,10 +219,12 @@ void huffman(FILE * infile, FILE * outfile, int * bin_list, int * len_list, long
         }
 
         fputc(new1,outfile);
+        num_output++;
     }
 
     //Overwrites correctly, calculating value is wrong
     fseek(outfile,0,SEEK_SET);
     fwrite(&num_output,sizeof(long),1,outfile);
+    fwrite(&tree_size,sizeof(long),1,outfile);
     return;
 }

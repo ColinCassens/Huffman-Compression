@@ -11,6 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c3cf8fe9-ef75-4dde-8b79-71072f26eb5d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/huff.c" beforeDir="false" afterPath="$PROJECT_DIR$/huff.c" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -41,13 +42,27 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/huff.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="470">
-              <caret line="152" lean-forward="true" selection-start-line="152" selection-end-line="152" />
+            <state relative-caret-position="279">
+              <caret line="203" column="16" lean-forward="true" selection-start-line="203" selection-start-column="16" selection-end-line="203" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>malloc</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -55,9 +70,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/main.c" />
         <option value="$PROJECT_DIR$/main.h" />
         <option value="$PROJECT_DIR$/Makefile" />
+        <option value="$PROJECT_DIR$/main.c" />
         <option value="$PROJECT_DIR$/huff.c" />
       </list>
     </option>
@@ -86,7 +101,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
@@ -125,7 +140,7 @@
       <workItem from="1553711235822" duration="654000" />
       <workItem from="1553711943607" duration="1072000" />
       <workItem from="1553713031158" duration="840000" />
-      <workItem from="1553723336982" duration="5577000" />
+      <workItem from="1553723336982" duration="9570000" />
     </task>
     <task id="LOCAL-00001" summary="Clion Push">
       <created>1553711553781</created>
@@ -183,11 +198,25 @@
       <option name="project" value="LOCAL" />
       <updated>1553736017766</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Header Printing Working Correctly">
+      <created>1553736241546</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1553736241546</updated>
+    </task>
+    <task id="LOCAL-00010" summary="MALLOCS-&gt;CALLOCS">
+      <created>1553736848106</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1553736848106</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10863000" />
+    <option name="totallyTimeSpent" value="14856000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -202,7 +231,7 @@
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49908924" weight="0.22222222" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49908924" visible="true" weight="0.22222222" />
       <window_info id="Structure" order="1" sideWeight="0.50091076" side_tool="true" weight="0.2496318" />
       <window_info id="Favorites" order="2" sideWeight="0.50091076" side_tool="true" weight="0.2496318" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -231,18 +260,13 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Clion Push" />
     <MESSAGE value="Header Printing Correctly for test case 1" />
-    <option name="LAST_COMMIT_MESSAGE" value="Header Printing Correctly for test case 1" />
+    <MESSAGE value="Header Printing Working Correctly" />
+    <MESSAGE value="MALLOCS-&gt;CALLOCS" />
+    <option name="LAST_COMMIT_MESSAGE" value="MALLOCS-&gt;CALLOCS" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" />
     <entry file="file://$PROJECT_DIR$/pa1" />
-    <entry file="file://$PROJECT_DIR$/main.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="5" lean-forward="true" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -257,10 +281,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/main.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/huff.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="470">
-          <caret line="152" lean-forward="true" selection-start-line="152" selection-end-line="152" />
+        <state relative-caret-position="279">
+          <caret line="203" column="16" lean-forward="true" selection-start-line="203" selection-start-column="16" selection-end-line="203" selection-end-column="16" />
         </state>
       </provider>
     </entry>
