@@ -35,8 +35,8 @@ int main(int argc,char ** argv)
       fclose(codefile);
     
       //create the binary lists, 1 for length 1 for code
-      int * bin_list = malloc(256 * sizeof(int));
-      int * len_list = malloc(256 * sizeof(int));
+      int * bin_list = calloc(256, sizeof(int));
+      int * len_list = calloc(256, sizeof(int));
       create_list(head,bin_list,len_list);
 
       //Write the compressed file
@@ -63,7 +63,7 @@ long count(FILE * fptr,FILE * count_file)
     {
         counter_arr[x] = 0;
     }
-    //char * char_value = malloc(sizeof(int));
+    //char * char_value = calloc(1,sizeof(int));
     int ascii_value;
     long num_char = 0;
 
@@ -106,8 +106,8 @@ treeNode * tree(FILE * fptr, FILE * tree_file, FILE * codefile, long num_charact
         numchar++;
     }
 
-    treeNode * head = malloc(sizeof(treeNode));
-    treeNode * temp = malloc(sizeof(treeNode));
+    treeNode * head = calloc(1,sizeof(treeNode));
+    treeNode * temp = calloc(1,sizeof(treeNode));
     head->next = temp;
     int x = 0;
     int maxfreq = 0;
@@ -163,7 +163,7 @@ treeNode * tree(FILE * fptr, FILE * tree_file, FILE * codefile, long num_charact
           }
         }
 
-        treeNode * temp2 = malloc(sizeof(treeNode));
+        treeNode * temp2 = calloc(1,sizeof(treeNode));
         //temp->next = temp2;
         temp = temp2;
         temp->freq = 0;
@@ -187,7 +187,7 @@ treeNode * tree(FILE * fptr, FILE * tree_file, FILE * codefile, long num_charact
 
 
     //Ceate the tree by taking the first two nodes and combining, then placing in the correct location
-    treeNode * stacknode = malloc(sizeof(treeNode));
+    treeNode * stacknode = calloc(1,sizeof(treeNode));
     while(head->next->next != NULL) //The node head->next will be the root of the tree
     {
       //Add the first two items of the list to the stack
@@ -196,7 +196,7 @@ treeNode * tree(FILE * fptr, FILE * tree_file, FILE * codefile, long num_charact
       stacknode->next->next->next = NULL;
 
       //Create the new root node from the nodes in the stack
-      treeNode * newNode = malloc(sizeof(treeNode));
+      treeNode * newNode = calloc(1,sizeof(treeNode));
       newNode->leftChild = stacknode->next;
       newNode->rightChild = stacknode->next->next;
       newNode->leftChild->next = NULL;

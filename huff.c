@@ -26,7 +26,7 @@ void huffman(FILE * infile, FILE * outfile, int * bin_list, int * len_list, long
 
     //WRITE THE TOPOLOGY OF THE HUFFMAN TREE
     //write_top(head, outfile); starting to work
-    //NOT WORKING
+    //WORKING
     fseek(treefile, 0, SEEK_SET);
     int buffer = 0;
     int num = 0;
