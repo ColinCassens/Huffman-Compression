@@ -38,19 +38,19 @@ int main(int argc,char ** argv)
       int * bin_list = calloc(256, sizeof(int));
       int * len_list = calloc(256, sizeof(int));
       create_list(head,bin_list,len_list);
+      freetree(head);
 
       //Write the compressed file
       FILE * outfile = fopen(argv[5],"wb");
       huffman(fptr, outfile, bin_list, len_list, tree_size, num_characters, treeFile);
 
-      freetree(head);
       free(bin_list);
       free(len_list);
+      fclose(outfile);
     }
     fclose(treeFile);
     fclose(count_file);
     fclose(fptr);
-
     return EXIT_SUCCESS;
 }
 
@@ -171,6 +171,8 @@ treeNode * tree(FILE * fptr, FILE * tree_file, FILE * codefile, long num_charact
         //temp->next = temp2;
         temp = temp2;
         temp->freq = 0;
+        temp2 = NULL;
+        free(temp2);
       }
     }
 
@@ -227,14 +229,14 @@ treeNode * tree(FILE * fptr, FILE * tree_file, FILE * codefile, long num_charact
 
     int cur_path = -1;
     int depth = 0;
-    Write_tree(tree_file,codefile,head->next, cur_path, depth, num_characters);
+    Write_tree(tree_file,codefile,head->next, cur_path, depth, numchar);
     temp = head->next;
     free(head);
     free(stacknode);
     return temp;
 }
 
-void Write_tree(FILE * treefile, FILE * codefile, treeNode * node, int cur_path, int depth, long num_characters)
+void Write_tree(FILE * treefile, FILE * codefile, treeNode * node, int cur_path, int depth, int num_characters)
 {
   if(node->freq > num_characters && node->leftChild->freq == num_characters)
   {
@@ -292,6 +294,9 @@ void Write_tree(FILE * treefile, FILE * codefile, treeNode * node, int cur_path,
 
 void freetree(treeNode * head)
 {
+    if(head->next != NULL){
+        freetree(head->next);
+    }
     if(head->leftChild != NULL){
         freetree(head->leftChild);
     }

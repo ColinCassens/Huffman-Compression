@@ -32,7 +32,7 @@ long count(FILE*file1, FILE * binary_file);
 treeNode * tree(FILE*file1, FILE*treeFile, FILE*countfile, long num_characters);
 //IN PROG.
 //SOMETHING WRONG WITH BINARY
-void Write_tree(FILE * treefile, FILE * codefile, treeNode * node, int cur_path, int depth, long num_characters);
+void Write_tree(FILE * treefile, FILE * codefile, treeNode * node, int cur_path, int depth, int num_characters);
 void create_list(treeNode * head,int * bin_list,int * len_list);
 void huffman(FILE * infile, FILE * outfile, int * bin_list, int * len_list, long tree, long num_char, FILE * treefile);
 void write_top(treeNode * node, FILE * outfile);
