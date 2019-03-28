@@ -11,7 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c3cf8fe9-ef75-4dde-8b79-71072f26eb5d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/huff.c" beforeDir="false" afterPath="$PROJECT_DIR$/huff.c" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -42,8 +41,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/huff.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="137">
-              <caret line="53" column="18" selection-start-line="53" selection-start-column="18" selection-end-line="53" selection-end-column="18" />
+            <state relative-caret-position="470">
+              <caret line="152" lean-forward="true" selection-start-line="152" selection-end-line="152" />
             </state>
           </provider>
         </entry>
@@ -126,7 +125,7 @@
       <workItem from="1553711235822" duration="654000" />
       <workItem from="1553711943607" duration="1072000" />
       <workItem from="1553713031158" duration="840000" />
-      <workItem from="1553723336982" duration="4167000" />
+      <workItem from="1553723336982" duration="5577000" />
     </task>
     <task id="LOCAL-00001" summary="Clion Push">
       <created>1553711553781</created>
@@ -170,11 +169,25 @@
       <option name="project" value="LOCAL" />
       <updated>1553726829574</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Clion Push">
+      <created>1553734849865</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1553734849865</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Header Printing Correctly for test case 1">
+      <created>1553736017766</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1553736017766</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9453000" />
+    <option name="totallyTimeSpent" value="10863000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -217,7 +230,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Clion Push" />
-    <option name="LAST_COMMIT_MESSAGE" value="Clion Push" />
+    <MESSAGE value="Header Printing Correctly for test case 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Header Printing Correctly for test case 1" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" />
@@ -245,8 +259,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/huff.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="53" column="18" selection-start-line="53" selection-start-column="18" selection-end-line="53" selection-end-column="18" />
+        <state relative-caret-position="470">
+          <caret line="152" lean-forward="true" selection-start-line="152" selection-end-line="152" />
         </state>
       </provider>
     </entry>
