@@ -48,6 +48,15 @@ int main(int argc,char ** argv)
       free(len_list);
       fclose(outfile);
     }
+    else{
+        FILE * outfile = fopen(argv[5],"wb");
+        long zero = 0;
+        long twenty4 = 24;
+        fwrite(&twenty4,sizeof(long),1,outfile);
+        fwrite(&zero,sizeof(long),1,outfile);
+        fwrite(&zero,sizeof(long),1,outfile);
+        fclose(outfile);
+    }
     fclose(treeFile);
     fclose(count_file);
     fclose(fptr);
